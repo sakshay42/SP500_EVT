@@ -15,7 +15,7 @@ Standard risk models often underestimate the probability of rare, extreme market
 
 ## Data
 
-- **Source:** S&P 500 daily closing prices (Yahoo Finance / `yfinance`)
+- **Source:** S&P 500 daily closing prices (downloaded from https://stooq.com/q/d/?s=%5Espx)
 - **Period:** January 2, 1985 – April 22, 2025
 - **Observations:** N = 10,154 trading days
 - **Target variable:** Log-returns $R_n = \log(X_n / X_{n-1})$
