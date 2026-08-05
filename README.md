@@ -18,7 +18,33 @@ Let `X_t` be the S&P 500 closing price on trading day `t`.
 R_t = 100 * log(X_t / X_{t-1})
 ```
 
-The models estimate conditional volatility of `R_t`, standardize returns as residuals `z_t`, then fit the left tail of `z_t` with EVT.
+`R_t` is the daily percent log-return. The project models the conditional volatility of `R_t`.
+
+The GARCH(1,1)-t model is:
+
+```text
+R_t = mu + epsilon_t
+epsilon_t = sigma_t * z_t
+z_t ~ standardized Student-t(nu)
+
+sigma_t^2 = omega + alpha1 * epsilon_{t-1}^2 + beta1 * sigma_{t-1}^2
+```
+
+The estimated object in the volatility stage is `sigma_t`, the conditional standard deviation of returns on day `t`.
+
+After estimating `sigma_t`, returns are standardized:
+
+```text
+z_t = (R_t - mu) / sigma_t
+```
+
+Then EVT models the left tail of `z_t`. For a threshold `u < 0`, exceedances are:
+
+```text
+y_t = u - z_t,  for z_t < u
+```
+
+The GPD estimates the tail shape `xi` and scale `sigma` of these positive excesses.
 
 ## GARCH(1,1)-t Fit
 
