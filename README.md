@@ -10,6 +10,16 @@
 | Return unit | percent log-return |
 | Train/test split | before 2018-01-01 / 2018 onward |
 
+## What Is Modeled
+
+Let `X_t` be the S&P 500 closing price on trading day `t`.
+
+```text
+R_t = 100 * log(X_t / X_{t-1})
+```
+
+The models estimate conditional volatility of `R_t`, standardize returns as residuals `z_t`, then fit the left tail of `z_t` with EVT.
+
 ## GARCH(1,1)-t Fit
 
 | Parameter | Estimate |
