@@ -5,6 +5,7 @@
 | Item | Value |
 |---|---:|
 | Series | S&P 500 daily closes |
+| Source | Stooq: https://stooq.com/q/d/?s=%5Espx |
 | Period | 1985-01-02 to 2025-04-22 |
 | Observations | 10,154 |
 | Return unit | percent log-return |
@@ -44,7 +45,7 @@ Then EVT models the left tail of `z_t`. For a threshold `u < 0`, exceedances are
 y_t = u - z_t,  for z_t < u
 ```
 
-The GPD estimates the tail shape `xi` and scale `sigma` of these positive excesses.
+The GPD estimates the tail shape `xi` and GPD scale `beta` of these positive excesses.
 
 ## GARCH(1,1)-t Fit
 
@@ -61,13 +62,19 @@ The GPD estimates the tail shape `xi` and scale `sigma` of these positive excess
 
 Left tail convention: exceedances are `z < u`; positive excess is `y = u - z`.
 
-| Threshold method | u | xi | sigma | exceedance rate | z_99 | z_95 |
+| Threshold method | u | xi | beta | exceedance rate | z_99 | z_95 |
 |---|---:|---:|---:|---:|---:|---:|
 | Preliminary 1% | -2.783 | 0.256 | 0.733 | 1.0% | -9.209 | n/a |
 | Mean-excess | -1.468 | 0.142 | 0.600 | 7.4% | -5.279 | -3.637 |
 | Weissman AMSE | -1.560 | 0.146 | 0.608 | 6.4% | -5.470 | -3.781 |
 
 ## Return-Scale VaR
+
+Standardized-residual tail quantiles are converted back to return units with:
+
+```text
+VaR_t(q) = mu + sigma_t * z_q
+```
 
 | Threshold method | VaR 99% one-step | VaR 95% one-step | VaR 99% avg sigma | VaR 95% avg sigma |
 |---|---:|---:|---:|---:|
